@@ -1,4 +1,4 @@
-package com.ihadzhi.bakingapp.ui;
+package com.ihadzhi.bakingtime.ui.recipe;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,16 +9,22 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ihadzhi.bakingapp.R;
-import com.ihadzhi.bakingapp.databinding.RecipeListItemBinding;
-import com.ihadzhi.bakingapp.model.Recipe;
+import com.ihadzhi.bakingtime.R;
+import com.ihadzhi.bakingtime.databinding.RecipeListItemBinding;
+import com.ihadzhi.bakingtime.model.Recipe;
 
 import java.util.List;
 
 class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeHolder> {
 
+    @FunctionalInterface
+    public interface RecipeClickListener {
+        void execute(Recipe recipe);
+    }
+
     private final Context context;
     private List<Recipe> recipes;
+    private RecipeClickListener recipeClickListener;
 
     public RecipesAdapter(@NonNull Context context) {
         this.context = context;
@@ -27,6 +33,10 @@ class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeHolder> {
     public void addRecipes(List<Recipe> recipes) {
         this.recipes = recipes;
         notifyDataSetChanged();
+    }
+
+    public void setRecipeClickListener(RecipeClickListener recipeClickListener) {
+        this.recipeClickListener = recipeClickListener;
     }
 
     @NonNull
@@ -75,12 +85,16 @@ class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeHolder> {
                         dataBinding.recipeContainer.setBackground(context.getDrawable(R.drawable.r4));
                         break;
                 }
+                dataBinding.recipeContainer.setOnClickListener(this);
             }
         }
 
         @Override
         public void onClick(View view) {
-
+            int position = getAdapterPosition();
+            if (recipeClickListener != null && recipes != null && recipes.size() > position) {
+                recipeClickListener.execute(recipes.get(position));
+            }
         }
 
     }

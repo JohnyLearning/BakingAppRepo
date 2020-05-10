@@ -1,12 +1,12 @@
-package com.ihadzhi.bakingapp.ui;
+package com.ihadzhi.bakingtime.ui;
 
 import android.content.DialogInterface;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.ihadzhi.bakingapp.R;
-import com.ihadzhi.bakingapp.model.OnError;
+import com.ihadzhi.bakingtime.R;
+import com.ihadzhi.bakingtime.model.OnError;
 
 public class BaseActivity extends AppCompatActivity implements OnError {
 

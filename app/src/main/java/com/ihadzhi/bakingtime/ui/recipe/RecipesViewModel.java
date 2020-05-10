@@ -1,4 +1,4 @@
-package com.ihadzhi.bakingapp.ui;
+package com.ihadzhi.bakingtime.ui.recipe;
 
 import android.app.Application;
 
@@ -7,16 +7,16 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.ihadzhi.bakingapp.model.OnError;
-import com.ihadzhi.bakingapp.model.Recipe;
-import com.ihadzhi.bakingapp.network.BakingService;
+import com.ihadzhi.bakingtime.model.OnError;
+import com.ihadzhi.bakingtime.model.Recipe;
+import com.ihadzhi.bakingtime.network.BakingService;
 
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-class RecipesViewModel extends AndroidViewModel {
+public class RecipesViewModel extends AndroidViewModel {
 
     private MutableLiveData<List<Recipe>> recipes;
 

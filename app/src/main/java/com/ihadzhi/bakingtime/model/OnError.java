@@ -1,4 +1,4 @@
-package com.ihadzhi.bakingapp.model;
+package com.ihadzhi.bakingtime.model;
 
 public interface OnError {
 

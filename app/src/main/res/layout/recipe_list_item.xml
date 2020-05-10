@@ -7,7 +7,7 @@
 
         <variable
             name="recipe"
-            type="com.ihadzhi.bakingapp.model.Recipe" />
+            type="com.ihadzhi.bakingtime.model.Recipe" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -26,7 +26,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textSize="38sp"
+                android:textSize="@dimen/recipe_title"
                 android:fontFamily="cursive"
                 android:text="@{recipe.name}"
                 android:textStyle="bold"

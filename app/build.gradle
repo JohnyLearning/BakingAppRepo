@@ -9,7 +9,7 @@ if (propertiesFile.exists()) {
 android {
     compileSdkVersion 29
     defaultConfig {
-        applicationId "com.example.ivanhadzhiiliev.popularmovies"
+        applicationId "com.ihadzhi.bakingtime"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1

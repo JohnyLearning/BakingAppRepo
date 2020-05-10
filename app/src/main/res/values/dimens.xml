@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="regular_title">24sp</dimen>
+    <dimen name="regular_text_size">16sp</dimen>
+    <dimen name="recipe_title">38sp</dimen>
+    <dimen name="side_margin">12dp</dimen>
+</resources>

@@ -1,6 +1,6 @@
-package com.ihadzhi.bakingapp.network;
+package com.ihadzhi.bakingtime.network;
 
-import com.ihadzhi.bakingapp.model.Recipe;
+import com.ihadzhi.bakingtime.model.Recipe;
 
 import java.util.List;
 
