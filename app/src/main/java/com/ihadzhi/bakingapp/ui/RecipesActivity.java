@@ -13,29 +13,22 @@ import com.ihadzhi.bakingapp.databinding.ActivityRecipesBinding;
 public class RecipesActivity extends BaseActivity {
 
     private RecipesViewModel recipesViewModel;
-    private ActivityRecipesBinding dataBinding;
     private RecipesAdapter recipesAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_recipes);
         recipesViewModel = ViewModelProviders.of(this).get(RecipesViewModel.class);
         recipesAdapter = new RecipesAdapter(this);
+        ActivityRecipesBinding dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_recipes);
         dataBinding.rvRecipes.setAdapter(recipesAdapter);
         dataBinding.rvRecipes.setLayoutManager(new LinearLayoutManager(this));
         loadRecipes();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
     private void loadRecipes()  {
         recipesViewModel.getRecipes(this).removeObservers(this);
         recipesViewModel.getRecipes(this).observe(this, recipes -> {
-            Log.d("THIS", String.valueOf(recipes));
             recipesAdapter.addRecipes(recipes);
         });
     }

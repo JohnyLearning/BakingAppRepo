@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Best baking recipes</string>
+    <string name="app_name">Baking Time</string>
     <string name="generic_error">Something went wrong!</string>
     <string name="ok_button">OK</string>
 </resources>

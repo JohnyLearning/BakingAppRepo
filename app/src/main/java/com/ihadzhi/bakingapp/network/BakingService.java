@@ -13,9 +13,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class BakingService {
 
-    private BakingApi bakingApi;
+    private final BakingApi bakingApi;
 
-    private static OkHttpClient okHttpClient = new OkHttpClient.Builder()
+    private static final OkHttpClient okHttpClient = new OkHttpClient.Builder()
             .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .build();
 

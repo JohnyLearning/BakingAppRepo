@@ -15,9 +15,9 @@ import com.ihadzhi.bakingapp.model.Recipe;
 
 import java.util.List;
 
-public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeHolder> {
+class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeHolder> {
 
-    private Context context;
+    private final Context context;
     private List<Recipe> recipes;
 
     public RecipesAdapter(@NonNull Context context) {
