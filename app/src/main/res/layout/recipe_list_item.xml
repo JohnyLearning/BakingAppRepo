@@ -10,51 +10,33 @@
             type="com.ihadzhi.bakingapp.model.Recipe" />
     </data>
 
-    <FrameLayout
-        android:layout_height="280dp"
-        android:layout_width="match_parent">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:layout_margin="12dp"
+        app:cardCornerRadius="6dp"
+        app:cardElevation="4dp">
 
-        <androidx.cardview.widget.CardView
+        <FrameLayout
+            android:id="@+id/recipe_container"
             android:layout_width="match_parent"
-            android:layout_height="220dp"
-            android:layout_margin="12dp"
-            app:cardCornerRadius="6dp"
-            app:cardElevation="4dp">
+            android:layout_height="match_parent"
+            android:background="@drawable/r3">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/recipe_container"
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/r3">
+                android:textSize="38sp"
+                android:fontFamily="cursive"
+                android:text="@{recipe.name}"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                tools:text="Nutella Pie"
+                android:paddingBottom="12dp"
+                android:gravity="center_horizontal|bottom" />
 
-<!--                <ImageView-->
-<!--                    android:id="@+id/recipe_image"-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="0dp"-->
-<!--                    app:layout_constraintTop_toTopOf="parent"-->
-<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                    app:layout_constraintStart_toStartOf="parent"-->
-<!--                    app:layout_constraintEnd_toEndOf="parent"-->
-<!--                    tools:background="@drawable/r3" />-->
+        </FrameLayout>
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textSize="38sp"
-                    android:fontFamily="cursive"
-                    android:text="@{recipe.name}"
-                    android:textStyle="bold"
-                    android:textColor="@color/white"
-                    tools:text="Nutella Pie"
-                    android:paddingBottom="12dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:gravity="center"/>
+    </androidx.cardview.widget.CardView>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.cardview.widget.CardView>
-
-    </FrameLayout>
 </layout>
