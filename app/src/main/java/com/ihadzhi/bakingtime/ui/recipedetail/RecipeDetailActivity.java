@@ -1,17 +1,22 @@
 package com.ihadzhi.bakingtime.ui.recipedetail;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.ihadzhi.bakingtime.R;
 import com.ihadzhi.bakingtime.databinding.ActivityRecipeDetailBinding;
 import com.ihadzhi.bakingtime.model.Ingredient;
 import com.ihadzhi.bakingtime.model.Recipe;
 import com.ihadzhi.bakingtime.ui.BaseActivity;
+import com.ihadzhi.bakingtime.ui.stepdetails.StepDetailActivity;
 
 import java.util.List;
+
+import static com.ihadzhi.bakingtime.ui.stepdetails.StepDetailActivity.SELECTED_STEP_PARAM;
 
 public class RecipeDetailActivity extends BaseActivity {
 
@@ -24,7 +29,11 @@ public class RecipeDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_recipe_detail);
         if (getIntent() != null) {
-            decorateIngredients(getIntent().getParcelableExtra(RECIPE_PARAM));
+            Recipe recipe = getIntent().getParcelableExtra(RECIPE_PARAM);
+            if (recipe != null) {
+                decorateIngredients(recipe);
+                decorateSteps(recipe);
+            }
         }
     }
 
@@ -50,15 +59,25 @@ public class RecipeDetailActivity extends BaseActivity {
         }
     }
 
+    private void decorateSteps(Recipe recipe) {
+        RecipeDetailStepsAdapter adapter = new RecipeDetailStepsAdapter(this, recipe.getSteps());
+        adapter.setStepClickListener(stepSelectedIndex -> {
+            Intent stepDetailIntent = new Intent(RecipeDetailActivity.this, StepDetailActivity.class);
+            stepDetailIntent.putExtra(RECIPE_PARAM, recipe);
+            stepDetailIntent.putExtra(SELECTED_STEP_PARAM, stepSelectedIndex);
+            startActivity(stepDetailIntent);
+        });
+        dataBinding.rvSteps.setAdapter(adapter);
+        dataBinding.rvSteps.setLayoutManager(new LinearLayoutManager(this));
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
 }

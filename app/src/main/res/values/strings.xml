@@ -3,4 +3,8 @@
     <string name="generic_error">Something went wrong!</string>
     <string name="ok_button">OK</string>
     <string name="ingredients_title">Ingredients</string>
+    <string name="steps_title">Steps</string>
+    <string name="step_details">Step details</string>
+    <string name="next_action"><![CDATA[next >>]]></string>
+    <string name="previous_action"><![CDATA[<< prev]]></string>
 </resources>

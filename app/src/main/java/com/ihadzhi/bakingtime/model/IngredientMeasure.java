@@ -12,7 +12,7 @@ public enum IngredientMeasure {
     OZ("ounces"),
     UNIT("units");
 
-    private String description;
+    private final String description;
 
     IngredientMeasure(String description) {
         this.description = description;

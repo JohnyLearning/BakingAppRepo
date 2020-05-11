@@ -61,14 +61,14 @@ class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeHolder> {
 
     class RecipeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private RecipeListItemBinding dataBinding;
+        private final RecipeListItemBinding dataBinding;
 
-        public RecipeHolder(RecipeListItemBinding binding) {
-                super(binding.getRoot());
+        RecipeHolder(RecipeListItemBinding binding) {
+            super(binding.getRoot());
             dataBinding = binding;
         }
 
-        public void bindItem(@Nullable Recipe recipe) {
+        void bindItem(@Nullable Recipe recipe) {
             if (recipe != null) {
                 dataBinding.setRecipe(recipe);
                 switch (recipe.getId()) {

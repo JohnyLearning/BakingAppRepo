@@ -57,7 +57,7 @@ public class Ingredient implements Parcelable {
         dest.writeString(this.ingredient);
     }
 
-    protected Ingredient(Parcel in) {
+    Ingredient(Parcel in) {
         this.quantity = (Double) in.readValue(Double.class.getClassLoader());
         int tmpMeasure = in.readInt();
         this.measure = tmpMeasure == -1 ? null : IngredientMeasure.values()[tmpMeasure];

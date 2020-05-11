@@ -1,5 +1,6 @@
 package com.ihadzhi.bakingtime.ui.recipe;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 
 import androidx.annotation.NonNull;
@@ -16,7 +17,7 @@ import java.util.List;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class RecipesViewModel extends AndroidViewModel {
+class RecipesViewModel extends AndroidViewModel {
 
     private MutableLiveData<List<Recipe>> recipes;
 
@@ -35,6 +36,7 @@ public class RecipesViewModel extends AndroidViewModel {
         return recipes;
     }
 
+    @SuppressLint("CheckResult")
     private void fetchRecipes(OnError errorCallback) {
         bakingService.getRecipes()
                 .subscribeOn(Schedulers.io())

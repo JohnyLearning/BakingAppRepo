@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-class Step implements Parcelable {
+public class Step implements Parcelable {
 
     @SerializedName("id")
     @Expose
@@ -81,7 +81,7 @@ class Step implements Parcelable {
     public Step() {
     }
 
-    protected Step(Parcel in) {
+    Step(Parcel in) {
         this.id = (Integer) in.readValue(Integer.class.getClassLoader());
         this.shortDescription = in.readString();
         this.description = in.readString();
