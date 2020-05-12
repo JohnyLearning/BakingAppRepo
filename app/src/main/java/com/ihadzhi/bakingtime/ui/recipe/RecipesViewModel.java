@@ -17,7 +17,7 @@ import java.util.List;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-class RecipesViewModel extends AndroidViewModel {
+public class RecipesViewModel extends AndroidViewModel {
 
     private MutableLiveData<List<Recipe>> recipes;
 
