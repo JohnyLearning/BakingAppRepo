@@ -1,10 +1,12 @@
 package com.ihadzhi.bakingtime.ui.recipe;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.ihadzhi.bakingtime.R;
@@ -16,6 +18,7 @@ public class RecipesActivity extends BaseActivity {
 
     private RecipesViewModel recipesViewModel;
     private RecipesAdapter recipesAdapter;
+    private ActivityRecipesBinding dataBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,10 +30,40 @@ public class RecipesActivity extends BaseActivity {
             recipeDetailIntent.putExtra(RecipeDetailActivity.RECIPE_PARAM, recipe);
             startActivity(recipeDetailIntent);
         });
-        ActivityRecipesBinding dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_recipes);
+        dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_recipes);
         dataBinding.rvRecipes.setAdapter(recipesAdapter);
-        dataBinding.rvRecipes.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        boolean isTablet = getResources().getBoolean(R.bool.isTablet);
+        if (isTablet) {
+            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                dataBinding.rvRecipes.setLayoutManager(new GridLayoutManager(this, 5));
+            } else {
+                dataBinding.rvRecipes.setLayoutManager(new GridLayoutManager(this, 3));
+            }
+        } else {
+            dataBinding.rvRecipes.setLayoutManager(new LinearLayoutManager(this));
+        }
         loadRecipes();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 
     private void loadRecipes()  {
