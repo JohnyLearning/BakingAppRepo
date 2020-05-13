@@ -5,20 +5,18 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.ihadzhi.bakingtime.R;
 import com.ihadzhi.bakingtime.databinding.ActivityRecipeDetailBinding;
-import com.ihadzhi.bakingtime.model.Ingredient;
 import com.ihadzhi.bakingtime.model.Recipe;
 import com.ihadzhi.bakingtime.ui.BaseActivity;
+import com.ihadzhi.bakingtime.ui.recipedetail.RecipesDetailsListFragment.OnStepClick;
 import com.ihadzhi.bakingtime.ui.stepdetails.StepDetailActivity;
-
-import java.util.List;
 
 import static com.ihadzhi.bakingtime.ui.stepdetails.StepDetailActivity.SELECTED_STEP_PARAM;
 
-public class RecipeDetailActivity extends BaseActivity {
+public class RecipeDetailActivity extends BaseActivity implements OnStepClick {
 
     public static final String RECIPE_PARAM = "recipe";
 
@@ -27,48 +25,27 @@ public class RecipeDetailActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Recipe recipe = getIntent().getParcelableExtra(RECIPE_PARAM);
         dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_recipe_detail);
         if (getIntent() != null) {
-            Recipe recipe = getIntent().getParcelableExtra(RECIPE_PARAM);
             if (recipe != null) {
-                decorateIngredients(recipe);
-                decorateSteps(recipe);
-            }
-        }
-    }
-
-    private void decorateIngredients(Recipe recipe) {
-        if (recipe != null) {
-            if (getSupportActionBar() != null) {
-                getSupportActionBar().setTitle(recipe.getName());
-                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            }
-            List<Ingredient> ingredients = recipe.getIngredients();
-            if (ingredients != null && ingredients.size() > 0) {
-                for (Ingredient ingredient : ingredients) {
-                    dataBinding.ingredientsList.append(
-                            new StringBuilder(ingredient.getIngredient())
-                                    .append(" (")
-                                    .append(ingredient.getQuantity())
-                                    .append(' ')
-                                    .append(ingredient.getMeasure())
-                                    .append(')')
-                                    .append('\n'));
+                if (getSupportActionBar() != null) {
+                    getSupportActionBar().setTitle(recipe.getName());
+                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 }
+                setupDetailsList(recipe);
             }
         }
+
     }
 
-    private void decorateSteps(Recipe recipe) {
-        RecipeDetailStepsAdapter adapter = new RecipeDetailStepsAdapter(this, recipe.getSteps());
-        adapter.setStepClickListener(stepSelectedIndex -> {
-            Intent stepDetailIntent = new Intent(RecipeDetailActivity.this, StepDetailActivity.class);
-            stepDetailIntent.putExtra(RECIPE_PARAM, recipe);
-            stepDetailIntent.putExtra(SELECTED_STEP_PARAM, stepSelectedIndex);
-            startActivity(stepDetailIntent);
-        });
-        dataBinding.rvSteps.setAdapter(adapter);
-        dataBinding.rvSteps.setLayoutManager(new LinearLayoutManager(this));
+    private void setupDetailsList(Recipe recipe) {
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.recipe_details_list_container, RecipesDetailsListFragment.newInstance(recipe, selectedStepIndex -> {
+                    onStepClickExecute(selectedStepIndex);
+                }))
+                .setTransition(FragmentTransaction.TRANSIT_NONE)
+                .commit();
     }
 
     @Override
@@ -80,5 +57,16 @@ public class RecipeDetailActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onStepClickExecute(int selectedStepIndex) {
+        Intent stepDetailIntent = new Intent(RecipeDetailActivity.this, StepDetailActivity.class);
+        stepDetailIntent.putExtra(RECIPE_PARAM, getRecipe());
+        stepDetailIntent.putExtra(SELECTED_STEP_PARAM, selectedStepIndex);
+        startActivity(stepDetailIntent);
+    }
+
+    private Recipe getRecipe() {
+        return getIntent() != null ? getIntent().getParcelableExtra(RECIPE_PARAM) : null;
+    }
 }
 
