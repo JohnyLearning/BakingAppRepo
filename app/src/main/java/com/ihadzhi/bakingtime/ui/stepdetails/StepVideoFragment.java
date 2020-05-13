@@ -59,6 +59,12 @@ public class StepVideoFragment extends Fragment {
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+        dataBinding.stepVideoPlayer.getPlayer().stop();
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         dataBinding.stepVideoPlayer.getPlayer().release();
