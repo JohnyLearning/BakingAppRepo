@@ -21,4 +21,8 @@ public class BaseActivity extends AppCompatActivity implements OnError {
         alertDialog.show();
     }
 
+    protected boolean isTablet() {
+        return getResources() != null ? getResources().getBoolean(R.bool.isTablet) : false;
+    }
+
 }
