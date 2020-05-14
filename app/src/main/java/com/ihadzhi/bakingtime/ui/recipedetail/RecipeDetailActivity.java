@@ -10,9 +10,13 @@ import androidx.fragment.app.FragmentTransaction;
 import com.ihadzhi.bakingtime.R;
 import com.ihadzhi.bakingtime.databinding.ActivityRecipeDetailBinding;
 import com.ihadzhi.bakingtime.model.Recipe;
+import com.ihadzhi.bakingtime.model.Step;
 import com.ihadzhi.bakingtime.ui.BaseActivity;
 import com.ihadzhi.bakingtime.ui.recipedetail.RecipesDetailsListFragment.OnStepClick;
 import com.ihadzhi.bakingtime.ui.stepdetails.StepDetailActivity;
+import com.ihadzhi.bakingtime.ui.stepdetails.StepVideoFragment;
+
+import java.util.List;
 
 import static com.ihadzhi.bakingtime.ui.stepdetails.StepDetailActivity.SELECTED_STEP_PARAM;
 
@@ -34,9 +38,22 @@ public class RecipeDetailActivity extends BaseActivity implements OnStepClick {
                     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 }
                 setupDetailsList(recipe);
+                if (isTablet()) {
+                    setupVideo(null);
+                }
             }
         }
 
+    }
+
+    private void setupVideo(Step step) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.video_container, StepVideoFragment.newInstance(step))
+                .commit();
+    }
+
+    private void setupInstruction(Step step) {
+        dataBinding.stepDescription.setText(step.getDescription());
     }
 
     private void setupDetailsList(Recipe recipe) {
@@ -59,10 +76,22 @@ public class RecipeDetailActivity extends BaseActivity implements OnStepClick {
 
     @Override
     public void onStepClickExecute(int selectedStepIndex) {
-        Intent stepDetailIntent = new Intent(RecipeDetailActivity.this, StepDetailActivity.class);
-        stepDetailIntent.putExtra(RECIPE_PARAM, getRecipe());
-        stepDetailIntent.putExtra(SELECTED_STEP_PARAM, selectedStepIndex);
-        startActivity(stepDetailIntent);
+        if (isTablet()) {
+            Recipe recipe = getRecipe();
+            if (recipe != null) {
+                List<Step> steps = recipe.getSteps();
+                if (steps != null && steps.size() > selectedStepIndex) {
+                    Step step = steps.get(selectedStepIndex);
+                    setupVideo(step);
+                    setupInstruction(step);
+                }
+            }
+        } else {
+            Intent stepDetailIntent = new Intent(RecipeDetailActivity.this, StepDetailActivity.class);
+            stepDetailIntent.putExtra(RECIPE_PARAM, getRecipe());
+            stepDetailIntent.putExtra(SELECTED_STEP_PARAM, selectedStepIndex);
+            startActivity(stepDetailIntent);
+        }
     }
 
     private Recipe getRecipe() {

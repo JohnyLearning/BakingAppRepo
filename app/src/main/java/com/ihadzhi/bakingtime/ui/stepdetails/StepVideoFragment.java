@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.ProgressiveMediaSource;
@@ -59,18 +60,13 @@ public class StepVideoFragment extends Fragment {
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-        dataBinding.stepVideoPlayer.getPlayer().stop();
-    }
-
-    @Override
     public void onDestroy() {
         super.onDestroy();
-        dataBinding.stepVideoPlayer.getPlayer().release();
+        releasePlayer();
     }
 
     public void setupPlayer(String url) {
+        releasePlayer();
         Context context = getActivity();
         SimpleExoPlayer player = new SimpleExoPlayer.Builder(context).build();
         DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(context,
@@ -81,5 +77,14 @@ public class StepVideoFragment extends Fragment {
         player.prepare(videoSource);
         player.seekTo(0);
         player.setPlayWhenReady(true);
+    }
+
+    // Release player
+    private void releasePlayer() {
+        Player player = dataBinding.stepVideoPlayer.getPlayer();
+        if (player != null) {
+            player.stop();
+            player.release();
+        }
     }
 }
