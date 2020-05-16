@@ -25,6 +25,7 @@ import android.os.Bundle;
 import android.widget.RemoteViews;
 
 import com.ihadzhi.bakingtime.R;
+import com.ihadzhi.bakingtime.model.Ingredient;
 import com.ihadzhi.bakingtime.model.Recipe;
 
 public class BakingTimeWidgetProvider extends AppWidgetProvider {
@@ -32,9 +33,21 @@ public class BakingTimeWidgetProvider extends AppWidgetProvider {
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 Recipe recipe, int appWidgetId) {
-        Bundle options = appWidgetManager.getAppWidgetOptions(appWidgetId);
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.ingredients_widget);
-        views.setTextViewText(R.id.ingredients_widget_list, recipe.getName());
+        if (recipe != null && recipe.getIngredients() != null) {
+            views.setTextViewText(R.id.ingredients_title, context.getString(R.string.ingredients_title_widget, recipe.getName()));
+            StringBuilder ingredientsBuilder = new StringBuilder();
+            for (Ingredient ingredient : recipe.getIngredients()) {
+                ingredientsBuilder.append(ingredient.getIngredient())
+                                .append(" (")
+                                .append(ingredient.getQuantity())
+                                .append(' ')
+                                .append(ingredient.getMeasure())
+                                .append(')')
+                                .append('\n');
+            }
+            views.setTextViewText(R.id.ingredients_widget_list, ingredientsBuilder);
+        }
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
