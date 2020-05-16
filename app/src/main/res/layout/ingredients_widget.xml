@@ -32,7 +32,7 @@
         android:layout_marginRight="12dp"/>
 
     <TextView
-        android:id="@+id/ingredients_list"
+        android:id="@+id/ingredients_widget_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textStyle="italic"

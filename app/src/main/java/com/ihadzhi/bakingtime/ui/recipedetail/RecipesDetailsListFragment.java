@@ -15,6 +15,7 @@ import com.ihadzhi.bakingtime.R;
 import com.ihadzhi.bakingtime.databinding.FragmentRecipeDetailsBinding;
 import com.ihadzhi.bakingtime.model.Ingredient;
 import com.ihadzhi.bakingtime.model.Recipe;
+import com.ihadzhi.bakingtime.widget.BakingTimeWidgetService;
 
 import java.util.List;
 
@@ -73,6 +74,7 @@ public class RecipesDetailsListFragment extends Fragment {
                                     .append(')')
                                     .append('\n'));
                 }
+                BakingTimeWidgetService.startActionIngredientsUpdate(getContext(), recipe);
             }
         }
     }
