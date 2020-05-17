@@ -56,6 +56,8 @@ public class RecipeDetailsActivityTest {
 
         onView(allOf(withId(R.id.ingredients_title))).check(matches(withText(R.string.ingredients_title)));
         onView(allOf(withId(R.id.steps_title))).check(matches(withText(R.string.steps_title)));
+
+        Intents.release();
     }
 
 }

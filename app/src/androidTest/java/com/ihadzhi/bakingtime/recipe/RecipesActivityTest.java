@@ -54,9 +54,13 @@ public class RecipesActivityTest {
 
         onView(withId(R.id.rv_recipes)).perform(RecyclerViewActions.scrollToPosition(4));
 
+        Thread.sleep(300);
+        
         onView(withId(R.id.rv_recipes)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
         intended(hasExtraWithKey("recipe"));
+
+        Intents.release();
 
     }
 
