@@ -3,6 +3,8 @@ package com.ihadzhi.bakingtime.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -76,6 +78,12 @@ public class Recipe implements Parcelable {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return name;
     }
 
     @Override

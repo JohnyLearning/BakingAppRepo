@@ -13,24 +13,24 @@ import com.ihadzhi.bakingtime.R;
 import com.ihadzhi.bakingtime.databinding.RecipeListItemBinding;
 import com.ihadzhi.bakingtime.model.Recipe;
 
-import java.util.List;
+import java.util.ArrayList;
 
 class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeHolder> {
 
     @FunctionalInterface
     public interface RecipeClickListener {
-        void execute(Recipe recipe);
+        void execute(ArrayList<Recipe> recipe, int selectedRecipeIndex);
     }
 
     private final Context context;
-    private List<Recipe> recipes;
+    private ArrayList<Recipe> recipes;
     private RecipeClickListener recipeClickListener;
 
     public RecipesAdapter(@NonNull Context context) {
         this.context = context;
     }
 
-    public void addRecipes(List<Recipe> recipes) {
+    public void addRecipes(ArrayList<Recipe> recipes) {
         this.recipes = recipes;
         notifyDataSetChanged();
     }
@@ -93,7 +93,7 @@ class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.RecipeHolder> {
         public void onClick(View view) {
             int position = getAdapterPosition();
             if (recipeClickListener != null && recipes != null && recipes.size() > position) {
-                recipeClickListener.execute(recipes.get(position));
+                recipeClickListener.execute(recipes, position);
             }
         }
 

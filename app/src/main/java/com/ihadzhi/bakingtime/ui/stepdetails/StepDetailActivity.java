@@ -11,10 +11,10 @@ import com.ihadzhi.bakingtime.databinding.ActivityStepDetailBinding;
 import com.ihadzhi.bakingtime.model.Recipe;
 import com.ihadzhi.bakingtime.model.Step;
 import com.ihadzhi.bakingtime.ui.BaseActivity;
-import com.ihadzhi.bakingtime.ui.recipedetail.RecipeDetailActivity;
 
 public class StepDetailActivity extends BaseActivity {
 
+    public static final String RECIPE_PARAM = "recipe";
     public static final String SELECTED_STEP_PARAM = "selectedStep";
 
     private ActivityStepDetailBinding dataBinding;
@@ -24,7 +24,7 @@ public class StepDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_step_detail);
         if (getIntent() != null) {
-            Recipe recipe = getIntent().getParcelableExtra(RecipeDetailActivity.RECIPE_PARAM);
+            Recipe recipe = getIntent().getParcelableExtra(RECIPE_PARAM);
             if (recipe != null) {
                 int selectedStepIndex = getIntent().getIntExtra(SELECTED_STEP_PARAM, 0);
                 if (recipe.getSteps() != null && recipe.getSteps().size() > 0) {

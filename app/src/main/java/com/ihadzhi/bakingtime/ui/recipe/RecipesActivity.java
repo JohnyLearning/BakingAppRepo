@@ -14,6 +14,8 @@ import com.ihadzhi.bakingtime.databinding.ActivityRecipesBinding;
 import com.ihadzhi.bakingtime.ui.BaseActivity;
 import com.ihadzhi.bakingtime.ui.recipedetail.RecipeDetailActivity;
 
+import java.util.ArrayList;
+
 public class RecipesActivity extends BaseActivity {
 
     private RecipesViewModel recipesViewModel;
@@ -25,9 +27,10 @@ public class RecipesActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         recipesViewModel = ViewModelProviders.of(this).get(RecipesViewModel.class);
         recipesAdapter = new RecipesAdapter(this);
-        recipesAdapter.setRecipeClickListener(recipe -> {
+        recipesAdapter.setRecipeClickListener((recipes, index) -> {
             Intent recipeDetailIntent = new Intent(RecipesActivity.this, RecipeDetailActivity.class);
-            recipeDetailIntent.putExtra(RecipeDetailActivity.RECIPE_PARAM, recipe);
+            recipeDetailIntent.putParcelableArrayListExtra(RecipeDetailActivity.RECIPES_PARAM, recipes);
+            recipeDetailIntent.putExtra(RecipeDetailActivity.SELECTED_RECIPE_INDEX_PARAM, index);
             startActivity(recipeDetailIntent);
         });
         dataBinding = DataBindingUtil.setContentView(this, R.layout.activity_recipes);
@@ -69,7 +72,7 @@ public class RecipesActivity extends BaseActivity {
     private void loadRecipes()  {
         recipesViewModel.getRecipes(this).removeObservers(this);
         recipesViewModel.getRecipes(this).observe(this, recipes -> {
-            recipesAdapter.addRecipes(recipes);
+            recipesAdapter.addRecipes(new ArrayList<>(recipes));
         });
     }
 }
