@@ -71,15 +71,6 @@ public class RecipeDetailActivity extends BaseActivity implements OnStepClick {
         dataBinding.stepDescription.setText(step.getDescription());
     }
 
-    private void setupDetailsList(Recipe recipe) {
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.recipe_details_list_container, RecipesDetailsListFragment.newInstance(recipe, selectedStepIndex -> {
-                    onStepClickExecute(selectedStepIndex);
-                }))
-                .setTransition(FragmentTransaction.TRANSIT_NONE)
-                .commit();
-    }
-
     private void replaceDetailsList(Recipe recipe) {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.recipe_details_list_container, RecipesDetailsListFragment.newInstance(recipe, selectedStepIndex -> {

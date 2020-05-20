@@ -2,7 +2,10 @@ package com.ihadzhi.bakingtime.ui.stepdetails;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -39,6 +42,7 @@ public class StepDetailActivity extends BaseActivity {
                     }
                     dataBinding.setStep(selectedStep);
                     setupVideo(selectedStep);
+                    setupNavigationButtons();
                 }
             }
         }
@@ -53,6 +57,57 @@ public class StepDetailActivity extends BaseActivity {
         }
     }
 
+    private void switchContent(Step step) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.video_container, StepVideoFragment.newInstance(step), StepVideoFragment.class.getCanonicalName())
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .commit();
+        dataBinding.setStep(step);
+    }
+
+    private void setupNavigationButtons() {
+        final Recipe recipe = getRecipe();
+        final int selectedStepIndex = getSelectedStepIndex();
+        if (selectedStepIndex > 0) {
+            enableButton(dataBinding.previousAction);
+            dataBinding.previousAction.setOnClickListener(view -> {
+                int previousStepIndex = getSelectedStepIndex() - 1;
+                switchContent(recipe.getSteps().get(previousStepIndex));
+                updateSelectedStep(previousStepIndex);
+                setupNavigationButtons();
+            });
+        } else {
+            disableButton(dataBinding.previousAction);
+        }
+        if (selectedStepIndex < recipe.getSteps().size() - 1) {
+            enableButton(dataBinding.nextAction);
+            dataBinding.nextAction.setOnClickListener(view -> {
+                int nextStepIndex = getSelectedStepIndex() + 1;
+                switchContent(recipe.getSteps().get(nextStepIndex));
+                updateSelectedStep(nextStepIndex);
+                setupNavigationButtons();
+            });
+        } else {
+            disableButton(dataBinding.nextAction);
+        }
+    }
+
+    private void enableButton(Button button) {
+        button.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+        button.setEnabled(true);
+    }
+
+    private void disableButton(Button button) {
+        button.setBackgroundColor(getResources().getColor(R.color.gray));
+        button.setEnabled(false);
+    }
+
+    private void updateSelectedStep(int stepIndex) {
+        if (getIntent() != null) {
+            getIntent().putExtra(SELECTED_STEP_PARAM, stepIndex);
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -60,6 +115,22 @@ public class StepDetailActivity extends BaseActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private int getSelectedStepIndex() {
+        int stepIndex = 0;
+        if (getIntent() != null) {
+            stepIndex = getIntent().getIntExtra(SELECTED_STEP_PARAM, stepIndex);
+        }
+        return stepIndex;
+    }
+
+    private Recipe getRecipe() {
+        Recipe recipe = null;
+        if (getIntent() != null) {
+            recipe = getIntent().getParcelableExtra(RECIPE_PARAM);
+        }
+        return recipe;
     }
 
 }
