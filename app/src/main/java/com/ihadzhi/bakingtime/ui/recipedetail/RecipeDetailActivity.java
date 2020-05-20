@@ -45,10 +45,6 @@ public class RecipeDetailActivity extends BaseActivity implements OnStepClick {
                 if (getSupportActionBar() != null) {
                     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 }
-                setupDetailsList(recipes.get(recipeIndex));
-                if (isTablet()) {
-                    setupVideo(null);
-                }
             }
         }
     }
