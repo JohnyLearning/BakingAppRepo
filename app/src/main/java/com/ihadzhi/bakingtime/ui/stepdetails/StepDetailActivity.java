@@ -45,10 +45,12 @@ public class StepDetailActivity extends BaseActivity {
     }
 
     private void setupVideo(Step step) {
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.video_container, StepVideoFragment.newInstance(step))
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .commit();
+        if (getSupportFragmentManager().findFragmentByTag(StepVideoFragment.class.getCanonicalName()) == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.video_container, StepVideoFragment.newInstance(step), StepVideoFragment.class.getCanonicalName())
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                    .commit();
+        }
     }
 
     @Override

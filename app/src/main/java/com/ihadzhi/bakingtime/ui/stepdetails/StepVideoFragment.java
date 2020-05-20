@@ -25,8 +25,12 @@ import com.ihadzhi.bakingtime.model.Step;
 
 public class StepVideoFragment extends Fragment {
 
+    private static final String videoPositionParam = "videoPosition";
+
     private static final String STEP_PARAM = "step";
     private FragmentRecipeStepVideoBinding dataBinding;
+
+    private long videoPosition = 0;
 
     public StepVideoFragment() {
     }
@@ -44,6 +48,11 @@ public class StepVideoFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+        if (savedInstanceState != null) {
+            videoPosition = savedInstanceState.getLong(videoPositionParam);
+        } else {
+            videoPosition = 0;
+        }
         dataBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_recipe_step_video, container, false);
         return dataBinding.getRoot();
     }
@@ -60,9 +69,18 @@ public class StepVideoFragment extends Fragment {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onStop() {
+        super.onStop();
         releasePlayer();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Player player = dataBinding.stepVideoPlayer.getPlayer();
+        if (player != null) {
+            outState.putLong(videoPositionParam, player.getCurrentPosition());
+        }
     }
 
     public void setupPlayer(String url) {
@@ -75,7 +93,7 @@ public class StepVideoFragment extends Fragment {
                 .createMediaSource(Uri.parse(url));
         dataBinding.stepVideoPlayer.setPlayer(player);
         player.prepare(videoSource);
-        player.seekTo(0);
+        player.seekTo(videoPosition);
         player.setPlayWhenReady(true);
     }
 
@@ -83,6 +101,7 @@ public class StepVideoFragment extends Fragment {
     private void releasePlayer() {
         Player player = dataBinding.stepVideoPlayer.getPlayer();
         if (player != null) {
+            videoPosition = player.getCurrentPosition();
             player.stop();
             player.release();
         }
