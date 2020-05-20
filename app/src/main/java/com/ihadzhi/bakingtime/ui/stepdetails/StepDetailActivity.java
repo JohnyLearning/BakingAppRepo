@@ -42,7 +42,9 @@ public class StepDetailActivity extends BaseActivity {
                     }
                     dataBinding.setStep(selectedStep);
                     setupVideo(selectedStep);
-                    setupNavigationButtons();
+                    if (dataBinding.nextAction != null) {
+                        setupNavigationButtons();
+                    }
                 }
             }
         }
