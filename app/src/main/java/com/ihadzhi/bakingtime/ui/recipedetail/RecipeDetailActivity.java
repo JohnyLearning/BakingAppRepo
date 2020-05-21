@@ -54,16 +54,13 @@ public class RecipeDetailActivity extends BaseActivity implements OnStepClick {
             List<Recipe> recipes = getRecipes();
             if (recipes != null && recipes.size() > index && index > -1) {
                 replaceDetailsList(recipes.get(index));
-                if (isTablet()) {
-                    setupVideo(null);
-                }
             }
         }
     }
 
     private void setupVideo(Step step) {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.video_container, StepVideoFragment.newInstance(step))
+                .replace(R.id.video_container, StepVideoFragment.newInstance(step), StepVideoFragment.class.getCanonicalName())
                 .commit();
     }
 
