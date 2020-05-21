@@ -1,5 +1,7 @@
 package com.ihadzhi.bakingtime.ui.recipedetail;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -74,7 +76,21 @@ public class RecipesDetailsListFragment extends Fragment {
                                     .append(')')
                                     .append('\n'));
                 }
-                BakingTimeWidgetService.startActionIngredientsUpdate(getContext(), recipe);
+                int savedRecipeId = readWidgetRecipeId();
+                if (savedRecipeId == recipe.getId()) {
+                    // display some indication that this is the recipe ingredients shown on the widget
+                    dataBinding.displayOnHomeAction.setVisibility(View.GONE);
+                    dataBinding.displayedOnHome.setVisibility(View.VISIBLE);
+                } else {
+                    dataBinding.displayOnHomeAction.setVisibility(View.VISIBLE);
+                    dataBinding.displayedOnHome.setVisibility(View.GONE);
+                    dataBinding.displayOnHomeAction.setOnClickListener(v -> {
+                        BakingTimeWidgetService.startActionIngredientsUpdate(getContext(), recipe);
+                        saveWidgetRecipeId(recipe.getId());
+                        dataBinding.displayOnHomeAction.setVisibility(View.GONE);
+                        dataBinding.displayedOnHome.setVisibility(View.VISIBLE);
+                    });
+                }
             }
         }
     }
@@ -88,5 +104,23 @@ public class RecipesDetailsListFragment extends Fragment {
         });
         dataBinding.rvSteps.setAdapter(adapter);
         dataBinding.rvSteps.setLayoutManager(new LinearLayoutManager(getContext()));
+    }
+
+    private int readWidgetRecipeId() {
+        Context context = getActivity();
+        SharedPreferences sharedPref = getSharePreferences();
+        return sharedPref.getInt(getString(R.string.widget_recipe), -1);
+    }
+
+    private void saveWidgetRecipeId(int recipeId) {
+        SharedPreferences sharedPref = getSharePreferences();
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putInt(getString(R.string.widget_recipe), recipeId);
+        editor.commit();
+    }
+
+    private SharedPreferences getSharePreferences() {
+        return getActivity().getSharedPreferences(
+                getString(R.string.widget_preferences), Context.MODE_PRIVATE);
     }
 }

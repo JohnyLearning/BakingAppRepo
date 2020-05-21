@@ -2,9 +2,11 @@
 <resources>
     <dimen name="regular_title">24sp</dimen>
     <dimen name="regular_text_size">16sp</dimen>
+    <dimen name="small_text_size">12sp</dimen>
     <dimen name="recipe_title">38sp</dimen>
     <dimen name="side_margin">12dp</dimen>
     <dimen name="spinner_side_margin">2dp</dimen>
+    <dimen name="button_side_margin">24dp</dimen>
 
     <!--
 Refer to App Widget Documentation for margin information

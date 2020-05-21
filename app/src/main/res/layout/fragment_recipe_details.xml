@@ -52,6 +52,33 @@
                     android:layout_marginLeft="@dimen/side_margin"
                     android:textSize="@dimen/regular_text_size" />
 
+                <Button
+                    android:id="@+id/displayOnHomeAction"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/display_on_home"
+                    android:layout_marginStart="@dimen/button_side_margin"
+                    android:layout_marginEnd="@dimen/button_side_margin"
+                    android:layout_marginBottom="@dimen/button_side_margin"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/regular_text_size"
+                    android:textColor="@color/white"
+                    android:background="@drawable/btn_rounded"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/displayed_on_home"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:textSize="@dimen/small_text_size"
+                    android:textStyle="italic"
+                    android:text="* These ingredients are displayed on the home screen *"
+                    android:layout_marginStart="@dimen/spinner_side_margin"
+                    android:layout_marginEnd="@dimen/spinner_side_margin"
+                    android:layout_marginBottom="@dimen/spinner_side_margin"
+                    android:gravity="right"/>
+
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>

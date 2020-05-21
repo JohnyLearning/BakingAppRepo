@@ -11,4 +11,7 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
     <string name="recipe_name">Recipe name</string>
+    <string name="display_on_home">Display on home</string>
+    <string name="widget_recipe">com.ihadzhi.bakingtime.widget_recipe</string>
+    <string name="widget_preferences">widget_preferences</string>
 </resources>
