@@ -22,6 +22,7 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static com.ihadzhi.bakingtime.ui.recipedetail.RecipeDetailActivity.RECIPES_PARAM;
+import static com.ihadzhi.bakingtime.ui.recipedetail.RecipeDetailActivity.SELECTED_RECIPE_INDEX_PARAM;
 import static org.hamcrest.core.AllOf.allOf;
 
 @RunWith(AndroidJUnit4ClassRunner.class)
@@ -38,10 +39,14 @@ public class RecipeDetailsActivityTest {
 
         Recipe recipe = new Recipe();
         recipe.setIngredients(new ArrayList<>());
+        recipe.setId(1);
         recipe.setName("Test recipe");
+        ArrayList<Recipe> recipes = new ArrayList<>();
+        recipes.add(recipe);
 
         Intent intent = new Intent();
-        intent.putExtra(RECIPES_PARAM, recipe);
+        intent.putParcelableArrayListExtra(RECIPES_PARAM, recipes);
+        intent.putExtra(SELECTED_RECIPE_INDEX_PARAM, 0);
 
         activityTestRule.launchActivity(intent);
 

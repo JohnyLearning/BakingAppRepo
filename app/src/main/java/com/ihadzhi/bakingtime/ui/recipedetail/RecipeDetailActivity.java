@@ -159,7 +159,7 @@ public class RecipeDetailActivity extends BaseActivity implements OnStepClick {
         if (getIntent() != null) {
             recipes = getIntent().getParcelableArrayListExtra(RECIPES_PARAM);
         }
-        return recipes;
+        return recipes != null ? recipes : new ArrayList<>();
     }
 }
 

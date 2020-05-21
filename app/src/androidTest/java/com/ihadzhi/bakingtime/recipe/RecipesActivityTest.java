@@ -58,7 +58,8 @@ public class RecipesActivityTest {
         
         onView(withId(R.id.rv_recipes)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
-        intended(hasExtraWithKey("recipe"));
+        intended(hasExtraWithKey("recipes"));
+        intended(hasExtraWithKey("selectedRecipeIndex"));
 
         Intents.release();
 
